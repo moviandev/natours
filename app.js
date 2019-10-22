@@ -8,7 +8,6 @@ const app = express();
 
 //1> MIDDLEWARES
 // Um middleware é uma função que pode mudar os dados que estão chegando.
-global.console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }

@@ -3,7 +3,7 @@
 exports.getAllUsers = (req, res) => {
   res.status(500).json({
     status: 'error',
-    message: "This route is't yet defined"
+    message: 'This route is not yet implemented'
   });
 };
 
@@ -12,16 +12,16 @@ exports.getAllUsers = (req, res) => {
 exports.createUser = (req, res) => {
   res.status(500).json({
     status: 'error',
-    message: "This route is't yet defined"
+    message: 'This route is not yet implemented'
   });
 };
 
-// Mostrar usuários
+// Mostrar usuário por id
 
 exports.getUser = (req, res) => {
   res.status(500).json({
     status: 'error',
-    message: "This route is't yet defined"
+    message: 'This route is not yet implemented'
   });
 };
 
@@ -30,7 +30,7 @@ exports.getUser = (req, res) => {
 exports.updateUser = (req, res) => {
   res.status(500).json({
     status: 'error',
-    message: "This route is't yet defined"
+    message: 'This route is not yet implemented'
   });
 };
 
@@ -39,6 +39,6 @@ exports.updateUser = (req, res) => {
 exports.deleteUser = (req, res) => {
   res.status(500).json({
     status: 'error',
-    message: "This route is't yet defined"
+    message: 'This route is not yet implemented'
   });
 };

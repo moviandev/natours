@@ -9,9 +9,14 @@
   },
   "author": "Matheus",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moviandev/natours.git"
+  },
   "dependencies": {
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "mongoose": "5.5.2",
     "morgan": "^1.9.1"
   },
   "devDependencies": {
@@ -24,5 +29,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.3",
     "prettier": "^1.18.2"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

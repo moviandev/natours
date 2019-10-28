@@ -3,7 +3,18 @@ const Tour = require('../models/tourModel');
 // GET Para mostrar todos os tours
 exports.getAllTours = async (req, res) => {
   try {
-    const tour = await Tour.find();
+    // FIltering
+    const queryObj = { ...req.query };
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach(el => delete queryObj[el]);
+
+    // Advanced Query
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, m => `$${m}`);
+    const query = await Tour.find(JSON.parse(queryStr));
+
+    // Execute query
+    const tour = await query;
 
     res.status(200).json({
       status: 'success',
@@ -35,12 +46,6 @@ exports.getTour = async (req, res) => {
       status: 'Not found'
     });
   }
-  // res.status(200).json({
-  //   status: 'success',
-  //   data: {
-  //     tour
-  //   }
-  // });
 };
 
 // POST para adicionar um novo tour

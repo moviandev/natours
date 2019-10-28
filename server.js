@@ -11,13 +11,13 @@ const DB = process.env.DATABASE.replace(
 const DB_LOCAL = process.env.DATABASE_LOCAL;
 
 mongoose
-  .connect(DB, {
+  .connect(DB_LOCAL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false
   })
   .then(con => global.console.log('DB_LOCAL connection successful'))
-  .catch(err => global.console.log('error try again'));
+  .catch(err => global.console.log('ERROR IN CONNECTION ', err));
 
 const app = require('./app');
 

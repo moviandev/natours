@@ -11,7 +11,20 @@ exports.getAllTours = async (req, res) => {
     // Advanced Query
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, m => `$${m}`);
-    const query = await Tour.find(JSON.parse(queryStr));
+
+    let query = Tour.find(JSON.parse(queryStr));
+
+    // Sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      query = query.sort(sortBy);
+    } else query = query.sort('-createdAt');
+
+    // Field Limiting
+    if (req.query.fields) {
+      const fields = req.query.fields.split(',').join(' ');
+      query = query.select(fields);
+    } else query = query.select('-__v');
 
     // Execute query
     const tour = await query;
@@ -26,7 +39,7 @@ exports.getAllTours = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       status: 'Not Found',
-      data: err.message
+      data: err
     });
   }
 };

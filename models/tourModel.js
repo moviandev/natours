@@ -87,7 +87,12 @@ toursSchema.pre(/^find/, function(next) {
 
 toursSchema.post(/^find/, function(docs, next) {
   console.log(`Query took ${Date.now() - this.start}`);
-  console.log(docs);
+  next();
+});
+
+toursSchema.pre('aggregate', function(next) {
+  this.pipeline().unshift({ $match: { secreteTour: { $ne: true } } });
+  console.log(this.pipeline());
   next();
 });
 

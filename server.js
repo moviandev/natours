@@ -16,12 +16,18 @@ mongoose
     useCreateIndex: true,
     useFindAndModify: false
   })
-  .then(con => global.console.log('DB_LOCAL connection successful'))
-  .catch(err => global.console.log('ERROR IN CONNECTION ', err));
-
+  .then(con => global.console.log('DB_LOCAL connection successful'));
 const app = require('./app');
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   global.console.log(`App Running on port ${port}...`);
+});
+
+process.on('unhandledRejection', err => {
+  console.log(err.name, err.message);
+  console.log('SHUTTING DOWN APP');
+  server.close(() => {
+    process.exit(1);
+  });
 });

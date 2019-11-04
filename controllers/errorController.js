@@ -7,8 +7,13 @@ const handleCastErrorDB = err => {
 
 const handleDuplicateErrorDB = err => {
   const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
-  console.log(value);
   const msg = `Duplicate tour value: ${value}. Try again to another name`;
+  return new AppError(msg, 400);
+};
+
+const handleValidationErrorDB = err => {
+  const errors = Object.values(err.errors).map(e => e.message);
+  const msg = `Invalid input data: ${errors.join('. ')}`;
   return new AppError(msg, 400);
 };
 
@@ -46,6 +51,7 @@ module.exports = (err, req, res, next) => {
     let error = { ...err };
     if (err.name === 'CastError') error = handleCastErrorDB(err);
     if (err.code === 11000) error = handleDuplicateErrorDB(err);
+    if (err.name === 'ValidationError') error = handleValidationErrorDB(err);
     sendErrorProd(error, res);
   }
 };

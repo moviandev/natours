@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -25,8 +26,26 @@ const userSchema = new mongoose.Schema({
   passwordConfirm: {
     type: String,
     required: [true, 'Confirm your awesome password'],
-    minLength: 8
+    minLength: 8,
+    validate: {
+      validator: function(el) {
+        return el === this.password;
+      },
+      message: 'Password does not match the '
+    }
   }
+});
+
+userSchema.pre('save', async function(next) {
+  // Only run this function if the password was truly modified
+  if (!this.isModified('password')) return next();
+
+  // Hash password
+  this.password = await bcrypt.hash(this.password, 12);
+
+  // Delete the confirm field from our database
+  this.passwordConfirm = undefined;
+  next();
 });
 
 const User = mongoose.model('User', userSchema);

@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
       validator: function(el) {
         return el === this.password;
       },
-      message: 'Password does not match the '
+      message: 'Password does not match your awesome password passed above'
     }
   }
 });

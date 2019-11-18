@@ -1,11 +1,19 @@
 // Mostrar todos os usuários
 
-exports.getAllUsers = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet implemented'
+const User = require('../models/userModel');
+const catchAsync = require('./../utils/catchAsync');
+
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+  const tour = await User.find();
+
+  res.status(200).json({
+    status: 'success',
+    results: tour.length,
+    data: {
+      tour
+    }
   });
-};
+});
 
 // Criar usuários
 

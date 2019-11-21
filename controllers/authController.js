@@ -17,7 +17,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm
+    passwordConfirm: req.body.passwordConfirm,
+    role: req.body.role
   });
 
   const token = signToken(newUser._id);
@@ -85,7 +86,18 @@ exports.protect = catchAsync(async (req, res, next) => {
       new AppError('User recently changed password. Please log in again', 401)
     );
 
-  // Grant access to protected route || Saving the user data into the request
+  // Grant access to protected route && Saving the user data into the request
   req.user = user;
   next();
 });
+
+exports.restrictTo = (...roles) => {
+  // Roles is an array
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role))
+      return next(
+        new AppError('You do not have permission to perform this action', 403)
+      );
+    next();
+  };
+};

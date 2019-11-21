@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema({
       'What a shame you did not provide a valid email try again please'
     ]
   },
+  role: {
+    type: String,
+    enum: ['user', 'guide', 'lead-guide', 'admin'],
+    default: 'user'
+  },
   password: {
     type: String,
     required: [true, 'You have to create a strong and awesome password'],

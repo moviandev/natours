@@ -13,6 +13,7 @@ const signToken = id => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  // I'm passing all the body requests to create a more secure API
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,

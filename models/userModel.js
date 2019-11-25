@@ -58,8 +58,11 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-userSchema.methods.correctPassword = async function(cp, up) {
-  return await bcrypt.compare(cp, up);
+userSchema.methods.correctPassword = async function(
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
 };
 
 userSchema.methods.changePasswordAfter = function(JWTTimestamp) {

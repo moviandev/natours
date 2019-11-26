@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'You have to create a strong and awesome password'],
     minLength: 8,
+    // To not show in any output
     select: false
   },
   passwordConfirm: {
@@ -58,8 +59,11 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-userSchema.methods.correctPassword = async function(cp, up) {
-  return await bcrypt.compare(cp, up);
+userSchema.methods.correctPassword = async function(
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
 };
 
 userSchema.methods.changePasswordAfter = function(JWTTimestamp) {

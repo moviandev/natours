@@ -59,6 +59,8 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
+// We did the bcrypt.compare in the model cause bcrypt was already here, and it's related to the usersModels itself
+// Thhe main objective of this method is to return true or false
 userSchema.methods.correctPassword = async function(
   candidatePassword,
   userPassword

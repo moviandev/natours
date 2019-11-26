@@ -41,8 +41,11 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError(`Please provide email and password`, 400));
 
   // 2-- Check if user exists && password is correct
+  // .select is used to get the fields that are hidden in ours outputs
   const user = await User.findOne({ email }).select('+password');
 
+  // We passed the method correctPassword directly on the if statement
+  // Beacause if the user doesn't exists it will return false right away
   if (!user || !(await user.correctPassword(password, user.password)))
     return next(new AppError('Invalid email or password', 401));
 

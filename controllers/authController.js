@@ -75,6 +75,11 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
 
   // Verification token
+
+  // How we are working with promises in all project, we promisified the jwt.verify
+  // We take promisify from a built-in module of node, we destructed it and take promisify
+  // We can call promisify and pass to it the function, in case jwt.verify
+  // This verification is to check if the token payload had been modified
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_TOKEN);
 
   // Check if user still exists

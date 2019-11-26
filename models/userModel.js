@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'You have to create a strong and awesome password'],
     minLength: 8,
+    // To not show in any output
     select: false
   },
   passwordConfirm: {

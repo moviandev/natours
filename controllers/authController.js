@@ -61,12 +61,14 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
   // Getting token and check if it's there
+  // A common practice is to send the token along with the HTTP headers
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   )
     token = req.headers.authorization.split(' ')[1];
 
+  // Checking if the token really exists
   if (!token)
     return next(
       new AppError('You are not logged in! Please log in to get access', 401)

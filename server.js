@@ -20,7 +20,8 @@ mongoose
   .connect(DB_LOCAL, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useUnifiedTopology: true
   })
   .then(con => global.console.log('DB_LOCAL connection successful'));
 const app = require('./app');

@@ -60,6 +60,13 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
+userSchema.pre('save', function(next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
 // Instance Method
 // We did the bcrypt.compare in the model cause bcrypt was already here, and it's related to the usersModels itself
 // The main objective of this method is to return true or false
@@ -92,13 +99,6 @@ userSchema.methods.createPasswordResetToken = function() {
     .digest('hex');
 
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
-
-  global.console.log(
-    {
-      resetToken
-    },
-    this.passwordResetToken
-  );
 
   return resetToken;
 };

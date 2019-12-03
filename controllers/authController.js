@@ -8,9 +8,8 @@ const sendEmail = require('./../utils/email');
 
 const envV = process.env;
 
-const signToken = id => {
-  return jwt.sign({ id }, envV.JWT_TOKEN, { expiresIn: envV.JWT_EXP_IN });
-};
+const signToken = id =>
+  jwt.sign({ id }, envV.JWT_TOKEN, { expiresIn: envV.JWT_EXP_IN });
 
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
@@ -164,6 +163,7 @@ exports.forgotPass = catchAsync(async (req, res, next) => {
     );
   }
 });
+
 exports.resetPass = catchAsync(async (req, res, next) => {
   // 1) Get user based on the token
   const hashedToken = crypto

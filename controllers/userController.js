@@ -59,6 +59,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 exports.deleteMe = catchAsync(async (req, res, next) => {
   // We not really delete a user in case he|she wants to use our app again
   await User.findByIdAndUpdate(req.user.id, { active: false });
+
   res.status(204).json({
     status: 'deleted',
     data: null

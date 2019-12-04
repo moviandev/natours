@@ -15,6 +15,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+// Prevent attackers to make attack with brute force
 const limiter = rateLimit({
   // 100 requests per hour, if the api should make more request from one IP this max limiter should be greater
   max: 100,

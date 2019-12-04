@@ -14,6 +14,8 @@ const signToken = id =>
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
+  res.cookie('jwt', token, { expires: envV.JWT_EXP_IN });
+
   res.status(statusCode).json({
     status: 'success',
     token,

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const User = require('./userModel');
 // const validator = require('validator');
 
 const toursSchema = new mongoose.Schema(
@@ -103,7 +104,8 @@ const toursSchema = new mongoose.Schema(
         description: String,
         day: String
       }
-    ]
+    ],
+    guides: Array
   },
   {
     toJSON: { virtuals: true },
@@ -119,6 +121,19 @@ toursSchema.virtual('durationWeeks').get(function() {
 // Document Middleware, runs before save() and create()
 toursSchema.pre('save', function(next) {
   this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+// An way to implement embedding into guides doccuments
+// This middleware will return to us all the documents instead just the IDs
+toursSchema.pre('save', async function(next) {
+  // This map will return to us a Promise and the we need to await that promise (made in the next line) to see our results
+  const guidesPromise = this.guides.map(async id => await User.findById(id));
+
+  // Storing the data result into guides
+  this.guides = await Promise.all(guidesPromise);
+
+  // Calling the next middleware
   next();
 });
 

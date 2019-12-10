@@ -35,7 +35,10 @@ exports.getTour = catchAsync(async (req, res, next) => {
   // Adding the populate into our find query will gonna fill it up
   // with data without adding it to te database
   // this way we will not broke our database exceeding the size limit
-  const tour = await Tour.findById(req.params.id).populate('guides');
+  const tour = await Tour.findById(req.params.id).populate({
+    path: 'guides',
+    select: '-__v -passwordCHangedAt'
+  });
 
   if (!tour) return next(new AppError('No tour available with that ID', 404));
 

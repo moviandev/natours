@@ -86,7 +86,7 @@ const toursSchema = new mongoose.Schema(
         default: 'Point',
         enum: ['Point']
       },
-      // Latitute and Longitude
+      // Longitude and Latitute
       coordinates: [Number],
       address: String,
       description: String
@@ -103,7 +103,9 @@ const toursSchema = new mongoose.Schema(
         description: String,
         day: String
       }
-    ]
+    ],
+    // Child Referencing
+    guides: [{ type: mongoose.Schema.ObjectId, ref: 'User' }]
   },
   {
     toJSON: { virtuals: true },
@@ -122,11 +124,39 @@ toursSchema.pre('save', function(next) {
   next();
 });
 
+// An way to implement embedding into guides doccuments
+// This middleware will return to us all the documents instead just the IDs
+
+// toursSchema.pre('save', async function(next) {
+// This map will return to us a Promise and the we need to await that promise (made in the next line) to see our results
+//   const guidesPromise = this.guides.map(async id => await User.findById(id));
+
+// Storing the data result into guides
+//   this.guides = await Promise.all(guidesPromise);
+
+// Calling the next middleware
+//   next();
+// });
+
 // Query Middleware
 toursSchema.pre(/^find/, function(next) {
   this.find({ secreteTour: { $ne: true } });
 
   this.start = Date.now();
+  next();
+});
+
+// Populate
+toursSchema.pre(/^find/, function(next) {
+  // Adding the populate into our find query will gonna fill it up
+  // with data without adding it to te database
+  // this way we will not broke our database exceeding the size limit
+  // keyword 'this' will point to the current query find
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordCHangedAt'
+  });
+
   next();
 });
 

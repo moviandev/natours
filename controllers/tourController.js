@@ -32,7 +32,10 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
 
 // GET tour by id
 exports.getTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id);
+  // Adding the populate into our find query will gonna fill it up
+  // with data without adding it to te database
+  // this way we will not broke our database exceeding the size limit
+  const tour = await Tour.findById(req.params.id).populate('guides');
 
   if (!tour) return next(new AppError('No tour available with that ID', 404));
 

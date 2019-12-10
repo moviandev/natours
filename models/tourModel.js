@@ -86,7 +86,7 @@ const toursSchema = new mongoose.Schema(
         default: 'Point',
         enum: ['Point']
       },
-      // Latitute and Longitude
+      // Longitude and Latitute
       coordinates: [Number],
       address: String,
       description: String

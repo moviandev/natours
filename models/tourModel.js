@@ -146,6 +146,20 @@ toursSchema.pre(/^find/, function(next) {
   next();
 });
 
+// Populate
+toursSchema.pre(/^find/, function(next) {
+  // Adding the populate into our find query will gonna fill it up
+  // with data without adding it to te database
+  // this way we will not broke our database exceeding the size limit
+  // keyword 'this' will point to the current query find
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordCHangedAt'
+  });
+
+  next();
+});
+
 toursSchema.pre('aggregate', function(next) {
   this.pipeline().unshift({ $match: { secreteTour: { $ne: true } } });
   next();

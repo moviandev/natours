@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema({
-  review: String,
+  review: {
+    type: String,
+    required: [true, 'Review cannot be empty']
+  },
   rating: {
     type: Number,
-    max: [5, 'The rating cannot be more than 5'],
+    min: [1, 'Rating must be between 1 and 5'],
+    max: [5, 'Rating cannot be more than 5'],
     default: 4.5
   },
   tour: {

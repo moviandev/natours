@@ -27,7 +27,7 @@ const reviewSchema = new mongoose.Schema(
     },
     createdAt: {
       type: Date,
-      default: Date().now()
+      default: Date.now()
     }
   },
   {
@@ -37,6 +37,15 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-const Review = mongoose.model('User', reviewSchema);
+reviewSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'author',
+    select: 'name email photo'
+  });
+
+  next();
+});
+
+const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;

@@ -67,14 +67,8 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
-// Criar usuários
-
-exports.createUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet implemented'
-  });
-};
+// Create users
+exports.createReview = factory(User);
 
 // Mostrar usuário por id
 

@@ -1,9 +1,12 @@
 const express = require('express');
 const tourController = require('../controllers/tourController');
-const reviewsController = require('../controllers/reviewsController');
 const auth = require('../controllers/authController');
+const reviewRouter = require('./reviewsRoutes');
 
 const router = express.Router();
+
+// Whenever it finds a url like this will get the review router
+router.use('/:tourId/reviews', reviewRouter);
 
 router
   .route('/top-5-cheap')
@@ -22,10 +25,5 @@ router
   .get(tourController.getTour)
   .patch(auth.protect, /*auth.restrict('admin')*/ tourController.updateTour)
   .delete(auth.protect, /*auth.restrict('admin')*/ tourController.deleteTour);
-
-router
-  .route('/:tourId/reviews')
-  .post(auth.protect, auth.restrictTo('user'), reviewsController.createReview)
-  .get(reviewsController.getAllReviews);
 
 module.exports = router;

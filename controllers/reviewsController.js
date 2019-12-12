@@ -22,3 +22,12 @@ exports.getReview = catchAsync(async (req, res, next) => {
     data: review
   });
 });
+
+exports.createTour = catchAsync(async (req, res, next) => {
+  const review = await Reviews.create(req.body);
+
+  res.status(200).json({
+    status: 'created',
+    data: review
+  });
+});

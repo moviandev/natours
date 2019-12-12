@@ -13,7 +13,7 @@ const reviewSchema = new mongoose.Schema(
       type: Number,
       min: [1, 'Rating must be between 1 and 5'],
       max: [5, 'Rating cannot be more than 5'],
-      default: 4.5
+      defeault: 4.5
     },
     tour: {
       type: mongoose.Schema.ObjectId,

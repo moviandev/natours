@@ -22,12 +22,12 @@ exports.updateOne = Model =>
     });
 
     if (!updateDoc)
-      return next(new AppError('No tour available with that ID', 404));
+      return next(new AppError('No Document available with that ID', 404));
 
     res.status(200).json({
       status: 'success',
       data: {
-        updateDoc
+        updated: updateDoc
       }
     });
   });

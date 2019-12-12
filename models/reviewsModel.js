@@ -27,7 +27,7 @@ const reviewSchema = new mongoose.Schema(
     },
     createdAt: {
       type: Date,
-      default: Date().now()
+      default: Date.now()
     }
   },
   {
@@ -37,6 +37,6 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-const Review = mongoose.model('User', reviewSchema);
+const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;

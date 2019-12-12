@@ -85,7 +85,8 @@ exports.getUser = (req, res) => {
   });
 };
 
-// Update usuários
+// Update user
+// DO NOT UPDATE PASSWORD WITH THIS ROUTE
 exports.updateTour = factory.updateOne(User);
 
 // Delete User

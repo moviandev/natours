@@ -3,6 +3,7 @@
 const User = require('../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
+const factory = require('./handlerFactory');
 
 // Method to ignore unwanted fields in the request.body
 // obj stands to the object that we want to filter [req.body]
@@ -95,9 +96,5 @@ exports.updateUser = (req, res) => {
 
 // Update usuários
 
-exports.deleteUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet implemented'
-  });
-};
+// Delete User
+exports.deleteUser = factory.deleteOne(User);

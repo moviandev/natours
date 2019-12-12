@@ -86,15 +86,7 @@ exports.getUser = (req, res) => {
 };
 
 // Update usuários
-
-exports.updateUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet implemented'
-  });
-};
-
-// Update usuários
+exports.updateTour = factory.updateOne(User);
 
 // Delete User
 exports.deleteUser = factory.deleteOne(User);

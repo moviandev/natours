@@ -13,3 +13,21 @@ exports.deleteOne = Model =>
       message: 'Your document has been deleted.'
     });
   });
+
+exports.updateOne = Model =>
+  catchAsync(async (req, res, next) => {
+    const updateDoc = await Model.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+
+    if (!updateDoc)
+      return next(new AppError('No tour available with that ID', 404));
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        updateDoc
+      }
+    });
+  });

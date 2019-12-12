@@ -26,6 +26,6 @@ router
 router
   .route('/:tourId/reviews')
   .post(auth.protect, auth.restrictTo('user'), reviewsController.createReview)
-  .get(auth.protect, auth.restrictTo('user'), reviewsController);
+  .get(auth.protect, auth.restrictTo('user'), reviewsController.getAllReviews);
 
 module.exports = router;

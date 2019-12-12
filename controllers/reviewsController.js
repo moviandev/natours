@@ -1,9 +1,9 @@
-const Reviews = require('../models/reviewsModel');
+const Review = require('../models/reviewsModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 exports.getAllReviews = catchAsync(async (req, res, next) => {
-  const review = await Reviews.find();
+  const review = await Review.find();
 
   res.status(200).json({
     status: 'success',
@@ -12,7 +12,7 @@ exports.getAllReviews = catchAsync(async (req, res, next) => {
 });
 
 exports.getReview = catchAsync(async (req, res, next) => {
-  const review = await Reviews.findById(req.params.id);
+  const review = await Review.findById(req.params.id);
 
   if (!review)
     return next(new AppError('Review not found. Please try again', 404));
@@ -24,7 +24,7 @@ exports.getReview = catchAsync(async (req, res, next) => {
 });
 
 exports.createReview = catchAsync(async (req, res, next) => {
-  const review = await Reviews.create(req.body);
+  const review = await Review.create(req.body);
 
   res.status(201).json({
     status: 'created',
@@ -33,7 +33,7 @@ exports.createReview = catchAsync(async (req, res, next) => {
 });
 
 exports.updateReview = catchAsync(async (req, res, next) => {
-  const review = await Reviews.findByIdAndUpdate(req.params.id, req.body, {
+  const review = await Review.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true
   });
@@ -48,7 +48,7 @@ exports.updateReview = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteReview = catchAsync(async (req, res, next) => {
-  const review = await Reviews.findByIdAndDelete(req.params.id);
+  const review = await Review.findByIdAndDelete(req.params.id);
 
   if (review)
     return next(new AppError('Review not found. Please try again', 404));

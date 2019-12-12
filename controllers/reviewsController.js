@@ -26,7 +26,7 @@ exports.getReview = catchAsync(async (req, res, next) => {
 exports.createReview = catchAsync(async (req, res, next) => {
   const review = await Reviews.create(req.body);
 
-  res.status(200).json({
+  res.status(201).json({
     status: 'created',
     data: review
   });
@@ -41,7 +41,7 @@ exports.updateReview = catchAsync(async (req, res, next) => {
   if (review)
     return next(new AppError('Review not found, please try again', 404));
 
-  res.status(200).json({
+  res.status(201).json({
     status: 'success',
     data: review
   });

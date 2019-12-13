@@ -46,7 +46,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
 });
 
 // POST new tour
-exports.createReview = factory(Tour);
+exports.createTour = factory.createOne(Tour);
 
 // Update tour
 exports.updateTour = factory.updateOne(Tour);

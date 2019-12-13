@@ -68,7 +68,7 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 });
 
 // Create users
-exports.createReview = factory(User);
+exports.createUser = factory.createOne(User);
 
 // Mostrar usuário por id
 
@@ -81,7 +81,7 @@ exports.getUser = (req, res) => {
 
 // Update user
 // DO NOT UPDATE PASSWORD WITH THIS ROUTE
-exports.updateTour = factory.updateOne(User);
+exports.updateUser = factory.updateOne(User);
 
 // Delete User
 exports.deleteUser = factory.deleteOne(User);

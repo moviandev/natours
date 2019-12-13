@@ -8,6 +8,9 @@ router
   .route('/')
   .post(auth.protect, auth.restrictTo('user'), reviews.createReview);
 
-router.route('/:id').delete(reviews.deleteReview);
+router
+  .route('/:id')
+  .patch(reviews.updateReview)
+  .delete(reviews.deleteReview);
 
 module.exports = router;

@@ -15,18 +15,13 @@ exports.getAllReviews = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createReview = catchAsync(async (req, res, next) => {
-  // checking if exist a tour and a user
-  if (!req.body.tour) req.body.tour = req.params.tourId;
-  if (!req.body.author) req.body.author = req.user.id;
+// // checking if exist a tour and a user
+// if (!req.body.tour) req.body.tour = req.params.tourId;
+// if (!req.body.author) req.body.author = req.user.id;
+exports.createReview = factory.createOne(Review);
 
-  const review = await Review.create(req.body);
-
-  res.status(201).json({
-    status: 'created',
-    data: review
-  });
-});
+// Update Review
+exports.updateReview = factory.updateOne(Review);
 
 // Delete review
 exports.deleteReview = factory.deleteOne(Review);

@@ -67,14 +67,8 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
-// Criar usuários
-
-exports.createUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet implemented'
-  });
-};
+// Create users
+exports.createUser = factory.createOne(User);
 
 // Mostrar usuário por id
 
@@ -85,16 +79,9 @@ exports.getUser = (req, res) => {
   });
 };
 
-// Update usuários
-
-exports.updateUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet implemented'
-  });
-};
-
-// Update usuários
+// Update user
+// DO NOT UPDATE PASSWORD WITH THIS ROUTE
+exports.updateUser = factory.updateOne(User);
 
 // Delete User
 exports.deleteUser = factory.deleteOne(User);

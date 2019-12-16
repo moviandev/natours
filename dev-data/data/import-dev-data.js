@@ -3,6 +3,8 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const Tour = require('./../../models/tourModel');
+const User = require('./../../models/userModel');
+const Reviews = require('./../../models/reviewsModel');
 
 // SETTING UP DOTENV
 dotenv.config({ path: './config.env' });
@@ -18,12 +20,17 @@ mongoose
   .connect(DB_LOCAL, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useUnifiedTopology: true
   })
   .then(con => global.console.log('DB_LOCAL connection successful'));
 // READ JSON FILE
 // READING AND PARSING DATA TO SEND TO DB
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'));
+const reviews = JSON.parse(
+  fs.readFileSync(`${__dirname}/reviews.json`, 'utf-8')
+);
+const users = JSON.parse(fs.readFileSync(`${__dirname}/users.json`, 'utf-8'));
 
 // IMPORT DATA INTO DB
 // CREATING METHOD TO IMPORT
@@ -31,6 +38,8 @@ const importData = async () => {
   try {
     // CREATING DOCUMENTS
     await Tour.create(tours);
+    await User.create(users, { validateBeforeSave: false });
+    await Reviews.create(reviews);
     console.log('TUDO OK');
     // KILLING SERVER
     process.exit();
@@ -45,6 +54,8 @@ const deleteData = async () => {
   try {
     // DELETING ALL DATA THAT IS IN DB
     await Tour.deleteMany();
+    await User.deleteMany();
+    await Reviews.deleteMany();
     console.log('deletado');
     // KILLING SERVER
     process.exit();

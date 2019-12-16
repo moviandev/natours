@@ -10,7 +10,7 @@ router
     auth.protect,
     auth.restrictTo('user'),
     reviews.setTourUsersId,
-    creviews.createReview
+    reviews.createReview
   );
 
 router

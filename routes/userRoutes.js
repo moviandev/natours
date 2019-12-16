@@ -11,26 +11,20 @@ router.post('/login', authController.login);
 router.post('/forgotPassword', authController.forgotPass);
 router.patch('/resetPassword/:token', authController.resetPass);
 
-router.patch(
-  '/updateMyPassword',
-  authController.protect,
-  authController.updatePassword
-);
+// Adding router middleware to call protect middleware before all the middleware that should be protected
+// Middlewares are called by sequence
 
-router.patch('/updateMe', authController.protect, userController.updateMe);
-router.patch('/deleteMe', authController.protect, userController.deleteMe);
-router.get(
-  '/me',
-  authController.protect,
-  userController.getMe,
-  userController.getUser
-);
+router.use(authController.protect);
 
-router
-  .route('/')
-  .get(userController.getAllUsers)
-  .post(userController.createUser);
+router.patch('/updateMyPassword', authController.updatePassword);
 
+router.get('/me', userController.getMe, userController.getUser);
+router.patch('/updateMe', userController.updateMe);
+router.patch('/deleteMe', userController.deleteMe);
+
+router.use(authController.restrictTo('admin'));
+
+router.route('/').get(userController.getAllUsers);
 router
   .route('/:id')
   .get(userController.getUser)

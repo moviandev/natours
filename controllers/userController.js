@@ -21,17 +21,7 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const tour = await User.find();
-
-  res.status(200).json({
-    status: 'success',
-    results: tour.length,
-    data: {
-      tour
-    }
-  });
-});
+exports.getAllUsers = factory.getAll(User);
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) create an error if user POSTs password data
@@ -72,12 +62,7 @@ exports.createUser = factory.createOne(User);
 
 // Mostrar usuário por id
 
-exports.getUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet implemented'
-  });
-};
+exports.getUser = factory.getOne(User);
 
 // Update user
 // DO NOT UPDATE PASSWORD WITH THIS ROUTE

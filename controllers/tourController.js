@@ -12,38 +12,10 @@ exports.aliasTopTours = (req, res, next) => {
 };
 
 // GET all tours
-exports.getAllTours = catchAsync(async (req, res, next) => {
-  // EXECUTE query
-  const features = new APIFeatures(Tour.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate(0);
-
-  const tour = await features.query;
-
-  res.status(200).json({
-    status: 'success',
-    results: tour.length,
-    data: {
-      tour
-    }
-  });
-});
+exports.getAllTours = factory.getAll(Tour);
 
 // GET tour by id
-exports.getTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id).populate('reviews');
-
-  if (!tour) return next(new AppError('No tour available with that ID', 404));
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour
-    }
-  });
-});
+exports.getTour = factory.getOne(Tour, { path: 'reviews' });
 
 // POST new tour
 exports.createTour = factory.createOne(Tour);

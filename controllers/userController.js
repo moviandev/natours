@@ -72,12 +72,7 @@ exports.createUser = factory.createOne(User);
 
 // Mostrar usuário por id
 
-exports.getUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet implemented'
-  });
-};
+exports.getUser = factory.getOne(User);
 
 // Update user
 // DO NOT UPDATE PASSWORD WITH THIS ROUTE

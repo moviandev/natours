@@ -15,6 +15,8 @@ exports.getAllReviews = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getReview = factory.getOne(Review);
+
 // // checking if exist a tour and a user
 exports.setTourUsersId = (req, res, next) => {
   if (!req.body.tour) req.body.tour = req.params.tourId;

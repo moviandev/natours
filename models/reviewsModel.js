@@ -47,6 +47,7 @@ reviewSchema.pre(/^find/, function(next) {
 });
 
 reviewSchema.statics.calcAvarageRatings = async function(tourId) {
+  // this points to the current docuument so I can use the aggregation pipeline
   const stats = await this.aggregate([
     {
       $match: { tour: tourId }

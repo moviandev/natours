@@ -9,7 +9,7 @@ exports.getReview = factory.getOne(Review);
 // // checking if exist a tour and a user
 exports.setTourUsersId = (req, res, next) => {
   if (!req.body.tour) req.body.tour = req.params.tourId;
-  if (!req.body.author) req.body.author = req.user.id;
+  if (!req.body.author) req.body.user = req.user.id;
   next();
 };
 exports.createReview = factory.createOne(Review);

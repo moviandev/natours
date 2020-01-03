@@ -74,7 +74,7 @@ reviewSchema.statics.calcAvarageRatings = async function(tourId) {
 // We should use post instead pre because the document is already saved in the database
 reviewSchema.post('save', function() {
   // this points to the current review (current document thats being saved)
-  // this.constructor points to the model
+  // this.constructor points to the current model
   this.constructor.calcAvarageRatings(this.tour);
 });
 

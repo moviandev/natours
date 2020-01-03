@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Tour = require('./tourModel');
 
 // Parent referencing is to not polute our DB
 // Always when we desing an app we have to think it as a thing that will be huge
@@ -47,6 +48,7 @@ reviewSchema.pre(/^find/, function(next) {
 });
 
 reviewSchema.statics.calcAvarageRatings = async function(tourId) {
+  // this points to the current docuument so I can use the aggregation pipeline
   const stats = await this.aggregate([
     {
       $match: { tour: tourId }
@@ -61,12 +63,26 @@ reviewSchema.statics.calcAvarageRatings = async function(tourId) {
   ]);
 
   console.log(stats);
+
+  // Saving to the current tour
+  await Tour.findByIdAndUpdate(tourId, {
+    ratingsQuantity: stats[0].nRatings,
+    ratingsAverage: stats[0].avgRating
+  });
 };
 
-reviewSchema.pre('save', function(next) {
-  // this points to the current review
-  // this.constructor points to the model
+// We should use post instead pre because the document is already saved in the database
+reviewSchema.post('save', function() {
+  // this points to the current review (current document thats being saved)
+  // this.constructor points to the current model
   this.constructor.calcAvarageRatings(this.tour);
+});
+
+// Pre middlewares does have next, post middlewares does not
+// findByIdAnd is a shorthand to findOneAnd
+reviewSchema.pre(/^findOneAnd/, async function(next) {
+  const r = await this.findOne();
+  console.log('R ===>', r);
   next();
 });
 

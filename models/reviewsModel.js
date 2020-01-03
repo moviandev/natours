@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Tour = require('./tourModel');
 
 // Parent referencing is to not polute our DB
 // Always when we desing an app we have to think it as a thing that will be huge
@@ -62,6 +63,11 @@ reviewSchema.statics.calcAvarageRatings = async function(tourId) {
   ]);
 
   console.log(stats);
+
+  await Tour.findByIdAndUpdate(tourId, {
+    ratingsQuantity: stats[0].nRatings,
+    ratingsAverage: stats[0].avgRating
+  });
 };
 
 // We should use post instead pre because the document is already saved in the database

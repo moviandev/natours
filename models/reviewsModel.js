@@ -65,8 +65,8 @@ reviewSchema.statics.calcAvarageRatings = async function(tourId) {
 };
 
 reviewSchema.pre('save', function(next) {
-  // this points to the current review
-  // this.constructor points to the current document that's being saved.
+  // this points to the current review (current document thats being saved)
+  // this.constructor points to the model
   this.constructor.calcAvarageRatings(this.tour);
   next();
 });

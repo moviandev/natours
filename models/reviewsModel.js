@@ -80,7 +80,11 @@ reviewSchema.post('save', function() {
 
 // Pre middlewares does have next, post middlewares does not
 // findByIdAnd is a shorthand to findOneAnd
-reviewSchema.pre(/^findOneAnd/, function(next) {});
+reviewSchema.pre(/^findOneAnd/, async function(next) {
+  const r = await this.findOne();
+  console.log('R ===>', r);
+  next();
+});
 
 const Review = mongoose.model('Review', reviewSchema);
 

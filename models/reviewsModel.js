@@ -78,6 +78,10 @@ reviewSchema.post('save', function() {
   this.constructor.calcAvarageRatings(this.tour);
 });
 
+// Pre middlewares does have next, post middlewares does not
+// findByIdAnd is a shorthand to findOneAnd
+reviewSchema.pre(/^findOneAnd/, function(next) {});
+
 const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;
